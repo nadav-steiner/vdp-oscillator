@@ -3,14 +3,13 @@ import numpy as np
 import qutip
 
 N = 35  # num. of levels
-alpha = 3  # initial density matrix is at coherent pure state alpha
 tN = 100  # number of time steps
 omega = 1  # frequency
 hbar = 1  # planck's constant
 
 
 def solve_lindblad(gamma1, gamma2, nbar_omega, nbar_delta, kappa,
-                   rho0, tlist, is_mc=False):
+                   rho0, tlist, is_mc=False, opts=None):
     # define system
     adag = qutip.create(N)
     a = adag.dag()
@@ -30,7 +29,7 @@ def solve_lindblad(gamma1, gamma2, nbar_omega, nbar_delta, kappa,
     if is_mc:
         return qutip.mcsolve(H, rho0, tlist, C_arr, [])
     else:
-        return qutip.mesolve(H, rho0, tlist, C_arr, [])
+        return qutip.mesolve(H, rho0, tlist, C_arr, [], options=opts)
 
 
 def plot_max_W_func(kappa_arr, nbar_omega, rho_arr, axes):
