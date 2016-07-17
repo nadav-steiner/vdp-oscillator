@@ -5,16 +5,12 @@ import qutip
 N = 35  # num. of levels
 alpha = 3  # initial density matrix is at coherent pure state alpha
 tN = 100  # number of time steps
+omega = 1  # frequency
 hbar = 1  # planck's constant
-kB = 1  # Boltzmann constant
-gamma1 = 1  # TODO
-gamma2 = 0.5  # 0.1         # TODO
-nbar_omega = 0.1  # Temperature dependence
-nbar_delta = 0.1  # Temperature dependence (of detuened pump)
 
 
 def solve_lindblad(gamma1, gamma2, nbar_omega, nbar_delta, kappa,
-                   rho0, tlist, is_mc):
+                   rho0, tlist, is_mc=False):
     # define system
     adag = qutip.create(N)
     a = adag.dag()
@@ -50,6 +46,10 @@ def plot_max_W_func(kappa_arr, nbar_omega, rho_arr, axes):
     axes.set_title("$nbar(\omega)=%f$" % nbar_omega)
 
 if __name__ == "__main__":
+    gamma1 = 1  # TODO
+    gamma2 = 0.5  # 0.1         # TODO
+    nbar_omega = 0.1  # Temperature dependence
+
     tlist = np.linspace(0.0, 20.0, tN)
     nbar_omega = (0.1, 0.4, 0.7)
     kappa = np.linspace(0, 1, 3)
